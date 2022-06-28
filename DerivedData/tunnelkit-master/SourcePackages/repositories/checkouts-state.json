@@ -1,0 +1,19 @@
+{
+  "object" : {
+    "repositories" : {
+      "https://github.com/passepartoutvpn/openssl-apple" : {
+        "repositoryURL" : "https://github.com/passepartoutvpn/openssl-apple",
+        "subpath" : "openssl-apple-252255f3"
+      },
+      "https://github.com/passepartoutvpn/wireguard-apple" : {
+        "repositoryURL" : "https://github.com/passepartoutvpn/wireguard-apple",
+        "subpath" : "wireguard-apple-9dbf9242"
+      },
+      "https://github.com/SwiftyBeaver/SwiftyBeaver" : {
+        "repositoryURL" : "https://github.com/SwiftyBeaver/SwiftyBeaver",
+        "subpath" : "SwiftyBeaver-f7471134"
+      }
+    }
+  },
+  "version" : 1
+}

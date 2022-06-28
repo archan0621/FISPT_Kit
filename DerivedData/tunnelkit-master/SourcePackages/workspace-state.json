@@ -1,0 +1,75 @@
+{
+  "object" : {
+    "artifacts" : [
+      {
+        "packageRef" : {
+          "identity" : "openssl-apple",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/passepartoutvpn/openssl-apple",
+          "name" : "openssl-apple"
+        },
+        "path" : "/Users/futuretekict/Downloads/tunnelkit-master/DerivedData/tunnelkit-master/SourcePackages/artifacts/openssl-apple/openssl.xcframework",
+        "source" : {
+          "checksum" : "6e053c4bc25ce38510bb917bb3f21eed4558311e6c5f6dfd0ee68cfc8bbae130",
+          "type" : "remote",
+          "url" : "https://github.com/keeshux/openssl-apple/releases/download/1.1.11500/openssl.xcframework.zip"
+        },
+        "targetName" : "openssl"
+      }
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "openssl-apple",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/passepartoutvpn/openssl-apple",
+          "name" : "openssl-apple"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "1c03f4d3fc1d90a0a525af68f06eada56e5e8bb1",
+            "version" : "1.1.11500"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "openssl-apple"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "swiftybeaver",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/SwiftyBeaver/SwiftyBeaver",
+          "name" : "SwiftyBeaver"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "2c039501d6eeb4d4cd4aec4a8d884ad28862e044",
+            "version" : "1.9.5"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "SwiftyBeaver"
+      },
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "wireguard-apple",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/passepartoutvpn/wireguard-apple",
+          "name" : "WireGuardKit"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "d3b8f1ac6f3361d69bd3daf8aee3c43012c6ec0b",
+            "version" : "1.0.16"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "wireguard-apple"
+      }
+    ]
+  },
+  "version" : 5
+}
