@@ -35,7 +35,7 @@
 //
 
 import Foundation
-@testable import TunnelKitCore
+import TunnelKitCore
 import CTunnelKitCore
 import CTunnelKitOpenVPNProtocol
 

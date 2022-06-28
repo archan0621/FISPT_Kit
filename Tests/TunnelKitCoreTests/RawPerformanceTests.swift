@@ -37,7 +37,7 @@
 import Foundation
 
 import XCTest
-@testable import TunnelKitCore
+import TunnelKitCore
 
 class RawPerformanceTests: XCTestCase {
     

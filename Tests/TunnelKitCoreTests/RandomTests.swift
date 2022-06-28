@@ -35,7 +35,7 @@
 //
 
 import XCTest
-@testable import TunnelKitCore
+import TunnelKitCore
 
 class RandomTests: XCTestCase {
 

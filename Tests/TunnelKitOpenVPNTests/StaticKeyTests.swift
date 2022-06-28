@@ -24,7 +24,7 @@
 //
 
 import XCTest
-@testable import TunnelKitCore
+import TunnelKitCore
 import TunnelKitOpenVPNCore
 
 class StaticKeyTests: XCTestCase {

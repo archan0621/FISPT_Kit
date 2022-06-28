@@ -35,7 +35,7 @@
 //
 
 import Foundation
-@testable import TunnelKitCore
+import TunnelKitCore
 
 public class TestUtils {
     public static func generateDataSuite(_ size: Int, _ count: Int) -> [Data] {

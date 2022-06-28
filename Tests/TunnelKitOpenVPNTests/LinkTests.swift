@@ -35,8 +35,8 @@
 //
 
 import XCTest
-@testable import TunnelKitCore
-@testable import CTunnelKitCore
+import TunnelKitCore
+import CTunnelKitCore
 
 class LinkTests: XCTestCase {
 

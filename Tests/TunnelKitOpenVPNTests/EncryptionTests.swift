@@ -35,8 +35,8 @@
 //
 
 import XCTest
-@testable import TunnelKitCore
-@testable import TunnelKitOpenVPNCore
+import TunnelKitCore
+import TunnelKitOpenVPNCore
 import CTunnelKitCore
 import CTunnelKitOpenVPNProtocol
 
