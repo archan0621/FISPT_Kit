@@ -262,5 +262,4 @@ Website: [archan0621.github.io][about-website]
 [about-tunnelblick-xor]: https://tunnelblick.net/cOpenvpn_xorpatch.html
 [about-pr-bitcode]: https://github.com/passepartoutvpn/tunnelkit/issues/51
 
-[about-twitter]: https://twitter.com/keeshux
-[about-website]: https://passepartoutvpn.app
+[about-website]: https://archan0621.github.io
