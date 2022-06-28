@@ -2,10 +2,7 @@
 ![macOS 10.15+](https://img.shields.io/badge/macos-10.15+-green.svg)
 [![License GPLv3](https://img.shields.io/badge/license-GPLv3-lightgray.svg)](LICENSE)
 
-[![Unit Tests](https://github.com/passepartoutvpn/tunnelkit/actions/workflows/test.yml/badge.svg)](https://github.com/passepartoutvpn/tunnelkit/actions/workflows/test.yml)
-[![Release](https://github.com/passepartoutvpn/tunnelkit/actions/workflows/release.yml/badge.svg)](https://github.com/passepartoutvpn/tunnelkit/actions/workflows/release.yml)
-
-# TunnelKit
+# FISPT_Kit
 
 This library provides a generic framework for VPN development on Apple platforms.
 
@@ -188,7 +185,7 @@ Contains the `NEPacketTunnelProvider` implementation of a WireGuard tunnel.
 
 ## License
 
-Copyright (c) 2022 Davide De Rosa. All rights reserved.
+Copyright (c) 2022 Park Jong Ha. All rights reserved.
 
 ### Part I
 
@@ -219,6 +216,10 @@ For more details please see [CONTRIBUTING][contrib-readme].
 - [XMB5][ppl-xmb5] for the [XOR patch][ppl-xmb5-xor] - Copyright (c) 2020 Sam Foxman
 - [eduVPN][ppl-eduvpn] for the convenient WireGuardKitGo script
 
+### TunnelKit
+
+© Copyright (c) 2022 Davide De Rosa. All rights reserved.
+
 ### OpenVPN
 
 © Copyright 2022 OpenVPN | OpenVPN is a registered trademark of OpenVPN, Inc.
@@ -233,9 +234,7 @@ This product includes software developed by the OpenSSL Project for use in the O
 
 ## Contacts
 
-Twitter: [@keeshux][about-twitter]
-
-Website: [passepartoutvpn.app][about-website]
+Website: [archan0621.github.io][about-website]
 
 [dep-brew]: https://brew.sh/
 [dep-openvpn]: https://openvpn.net/index.php/open-source/overview.html
@@ -263,5 +262,4 @@ Website: [passepartoutvpn.app][about-website]
 [about-tunnelblick-xor]: https://tunnelblick.net/cOpenvpn_xorpatch.html
 [about-pr-bitcode]: https://github.com/passepartoutvpn/tunnelkit/issues/51
 
-[about-twitter]: https://twitter.com/keeshux
-[about-website]: https://passepartoutvpn.app
+[about-website]: https://archan0621.github.io
