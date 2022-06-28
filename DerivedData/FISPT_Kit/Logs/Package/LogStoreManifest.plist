@@ -202,6 +202,34 @@
 			<key>uniqueIdentifier</key>
 			<string>223FC4E8-9AE9-4799-9777-6150ED93E570</string>
 		</dict>
+		<key>229D6BDC-1970-4F7B-A3C4-F9F4737ACA35</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.PackageLog</string>
+			<key>fileName</key>
+			<string>229D6BDC-1970-4F7B-A3C4-F9F4737ACA35.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>Resolve Packages</string>
+			<key>timeStartedRecording</key>
+			<real>678096057.28931499</real>
+			<key>timeStoppedRecording</key>
+			<real>678096057.47296798</real>
+			<key>title</key>
+			<string>Resolve Packages</string>
+			<key>uniqueIdentifier</key>
+			<string>229D6BDC-1970-4F7B-A3C4-F9F4737ACA35</string>
+		</dict>
 		<key>240525E6-BE16-42C6-B80A-88B068AE2B25</key>
 		<dict>
 			<key>className</key>
@@ -229,6 +257,34 @@
 			<string>Resolve Packages</string>
 			<key>uniqueIdentifier</key>
 			<string>240525E6-BE16-42C6-B80A-88B068AE2B25</string>
+		</dict>
+		<key>33B898ED-09A2-4FC3-82BD-362447792759</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.PackageLog</string>
+			<key>fileName</key>
+			<string>33B898ED-09A2-4FC3-82BD-362447792759.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>Resolve Packages</string>
+			<key>timeStartedRecording</key>
+			<real>678096055.29630303</real>
+			<key>timeStoppedRecording</key>
+			<real>678096056.59509599</real>
+			<key>title</key>
+			<string>Resolve Packages</string>
+			<key>uniqueIdentifier</key>
+			<string>33B898ED-09A2-4FC3-82BD-362447792759</string>
 		</dict>
 		<key>35476F2D-E982-4CFB-8E88-A152EABAB460</key>
 		<dict>

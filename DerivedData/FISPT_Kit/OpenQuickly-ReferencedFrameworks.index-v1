@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>Cocoa</string>
+	<string>Demo</string>
+	<string>AVFoundation</string>
+	<string>LocalAuthentication</string>
+	<string>WireGuardKitGo</string>
+	<string>TunnelKitOpenVPN</string>
+	<string>ServiceManagement</string>
+	<string>TunnelKitOpenVPNManager</string>
+	<string>SwiftyBeaver</string>
+	<string>CoreWLAN</string>
+	<string>TunnelKitOpenVPNCore</string>
+	<string>CTunnelKitCore</string>
+	<string>Network</string>
+	<string>TunnelKitWireGuardCore</string>
+	<string>TunnelKitWireGuard</string>
+	<string>TunnelKitWireGuardAppExtension</string>
+	<string>CoreData</string>
+	<string>arpa</string>
+	<string>MobileCoreServices</string>
+	<string>sys</string>
+	<string>UserNotifications</string>
+	<string>WireGuardKit</string>
+	<string>TunnelKitOpenVPNAppExtension</string>
+	<string>CTunnelKitOpenVPNCore</string>
+	<string>TunnelKitOpenVPNProtocol</string>
+	<string>TunnelKitCore</string>
+	<string>TunnelKitAppExtension</string>
+	<string>TunnelKitManager</string>
+	<string>TunnelKitWireGuardManager</string>
+	<string>FoundationNetworking</string>
+	<string>PackageDescription</string>
+	<string>openssl</string>
+	<string>XCTest</string>
+	<string>MapKit</string>
+	<string>Foundation</string>
+	<string>Security</string>
+	<string>os</string>
+	<string>WireGuardKitC</string>
+	<string>AppKit</string>
+	<string>Dispatch</string>
+	<string>TunnelKitLZO</string>
+	<string>SwiftyBeaverTests</string>
+	<string>ObjectiveC</string>
+	<string>frameworks</string>
+	<string>net</string>
+	<string>NetworkExtension</string>
+	<string>SystemConfiguration</string>
+	<string>CTunnelKitOpenVPNProtocol</string>
+	<string>UIKit</string>
+</array>
+</plist>
