@@ -126,7 +126,7 @@ for macOS.
 
 Download the library codebase locally:
 
-    $ git clone https://github.com/passepartoutvpn/tunnelkit.git
+    $ git clone https://github.com/archan0621/FISPT_Kit.git
 
 There are demo targets containing a simple app for testing the tunnels. Open `Demo/TunnelKit.xcodeproject` in Xcode and run it on both iOS and macOS.
 
