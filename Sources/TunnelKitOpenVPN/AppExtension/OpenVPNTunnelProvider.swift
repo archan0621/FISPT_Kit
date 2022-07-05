@@ -976,7 +976,7 @@ extension OpenVPNTunnelProvider {
                 return .serverShutdown
             
             //jhpark
-            case .authDeviceFail
+            case .authDeviceFail:
                 return .authentication
 
             default:
