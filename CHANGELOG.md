@@ -5,63 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
-
-### Added
-
-- OpenVPN: Parse authentication requirement from `--auth-user-pass`.
-- OpenVPN: Handle multiple `--remote` options correctly.
-- OpenVPN: Explicitly enable/disable DNS/proxy settings.
-
-### Changed
-
-- Manager package completely rewritten with Swift Concurrency.
-- WireGuard: Use entities from WireGuardKit directly.
-- Only enable on-demand if at least one rule is provided.
-- Dropped incomplete support for IPSec/IKEv2.
-
-## 4.1.0 (2022-02-09)
-
-### Added
-
-- WireGuard support. [#236](https://github.com/passepartoutvpn/tunnelkit/pull/236)
-- Handle `--keepalive` option.
-
-### Changed
-
-- Relax deployment target for macOS down to 10.14
-- Upgrade OpenSSL to 1.1.1m.
-
-## 4.0.3 (2021-11-27)
-
-### Fixed
-
-- Verify CA from on-disk file. [#237](https://github.com/passepartoutvpn/tunnelkit/pull/237)
-
-## 4.0.2 (2021-11-25)
-
-### Changed
-
-- Revert to OpenSSL. [#233](https://github.com/passepartoutvpn/tunnelkit/pull/233)
-
-### Fixed
-
-- TLS fails on CA verification on some servers. [#232](https://github.com/passepartoutvpn/tunnelkit/issues/232)
-- TLS negotiation times out with ProtonVPN. [#230](https://github.com/passepartoutvpn/tunnelkit/issues/230)
-
-## 4.0.1 (2021-11-18)
-
-### Fixed
-
-- Regression in TLS handshake (temporarily revert [#213](https://github.com/passepartoutvpn/tunnelkit/pull/213)).
-
-## 4.0.0 (2021-11-16)
+## 4.0.0 (2021-11-05)
 
 ### Changed
 
 - Migrate to SwiftPM. [#210](https://github.com/passepartoutvpn/tunnelkit/issues/210)
-- Replace OpenSSL with BoringSSL from SwiftNIO SSL.
-- Drop support for TLS security level (not present in BoringSSL).
 
 ## 3.5.0 (2021-10-18)
 
@@ -73,10 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Avoid caching PEMs on disk (roop). [#213](https://github.com/passepartoutvpn/tunnelkit/pull/213)
 - Upgrade OpenSSL to 1.1.1l.
-
-### Fixed
-
-- Avoid caching PEMs on disk. [#213](https://github.com/passepartoutvpn/tunnelkit/pull/213)
 
 ## 3.4.0 (2021-08-07)
 

@@ -3,7 +3,7 @@
 //  TunnelKitOpenVPNTests
 //
 //  Created by Davide De Rosa on 11/10/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -25,7 +25,7 @@
 
 import XCTest
 import TunnelKitCore
-import TunnelKitOpenVPNCore
+import TunnelKitOpenVPN
 
 class ConfigurationParserTests: XCTestCase {
     override func setUp() {
@@ -48,16 +48,6 @@ class ConfigurationParserTests: XCTestCase {
         
         XCTAssertNoThrow(try OpenVPN.ConfigurationParser.parsed(fromLines: ["compress"]))
         XCTAssertNoThrow(try OpenVPN.ConfigurationParser.parsed(fromLines: ["compress lzo"]))
-    }
-    
-    func testKeepAlive() throws {
-        let cfg1 = try OpenVPN.ConfigurationParser.parsed(fromLines: ["ping 10", "ping-restart 60"])
-        let cfg2 = try OpenVPN.ConfigurationParser.parsed(fromLines: ["keepalive 10 60"])
-        let cfg3 = try OpenVPN.ConfigurationParser.parsed(fromLines: ["keepalive 15 600"])
-        XCTAssertEqual(cfg1.configuration.keepAliveInterval, cfg2.configuration.keepAliveInterval)
-        XCTAssertEqual(cfg1.configuration.keepAliveTimeout, cfg2.configuration.keepAliveTimeout)
-        XCTAssertNotEqual(cfg1.configuration.keepAliveInterval, cfg3.configuration.keepAliveInterval)
-        XCTAssertNotEqual(cfg1.configuration.keepAliveTimeout, cfg3.configuration.keepAliveTimeout)
     }
     
     func testDHCPOption() throws {
@@ -105,12 +95,13 @@ class ConfigurationParserTests: XCTestCase {
     
     func testPIA() throws {
         let file = try OpenVPN.ConfigurationParser.parsed(fromURL: url(withName: "pia-hungary"))
-        XCTAssertEqual(file.configuration.remotes, [
-            .init("hungary.privateinternetaccess.com", .init(.udp, 1198)),
-            .init("hungary.privateinternetaccess.com", .init(.tcp, 502)),
-        ])
+        XCTAssertEqual(file.configuration.hostname, "hungary.privateinternetaccess.com")
         XCTAssertEqual(file.configuration.cipher, .aes128cbc)
         XCTAssertEqual(file.configuration.digest, .sha1)
+        XCTAssertEqual(file.configuration.endpointProtocols, [
+            EndpointProtocol(.udp, 1198),
+            EndpointProtocol(.tcp, 502)
+        ])
     }
 
     func testStripped() throws {

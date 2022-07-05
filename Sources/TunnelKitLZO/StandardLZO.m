@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 3/18/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -23,10 +23,9 @@
 //  along with TunnelKit.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import "StandardLZO.h"
 #import "lib/minilzo.h"
 
-NSString *const TunnelKitLZOErrorDomain    = @"TunnelKitLZO";
+#import "Errors.h"
 
 #define HEAP_ALLOC(var,size) \
 lzo_align_t __LZO_MMODEL var [ ((size) + (sizeof(lzo_align_t) - 1)) / sizeof(lzo_align_t) ]
@@ -69,7 +68,7 @@ static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
     const int status = lzo1x_1_compress(data.bytes, data.length, dst.mutableBytes, &dstLength, wrkmem);
     if (status != LZO_E_OK) {
         if (error) {
-            *error = [NSError errorWithDomain:TunnelKitLZOErrorDomain code:0 userInfo:nil];
+            *error = TunnelKitErrorWithCode(TunnelKitErrorCodeLZO);
         }
         return nil;
     }
@@ -91,7 +90,7 @@ static HEAP_ALLOC(wrkmem, LZO1X_1_MEM_COMPRESS);
     const int status = lzo1x_decompress_safe(bytes, length, self.decompressedBuffer.mutableBytes, &dstLength, NULL);
     if (status != LZO_E_OK) {
         if (error) {
-            *error = [NSError errorWithDomain:TunnelKitLZOErrorDomain code:0 userInfo:nil];
+            *error = TunnelKitErrorWithCode(TunnelKitErrorCodeLZO);
         }
         return nil;
     }

@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 12/15/17.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -45,22 +45,15 @@ public struct DNSRecord {
     /// `true` if IPv6.
     public let isIPv6: Bool
 
+    /// :nodoc:
     public init(address: String, isIPv6: Bool) {
         self.address = address
         self.isIPv6 = isIPv6
     }
 }
 
-/// Errors coming from `DNSResolver`.
-public enum DNSError: Error {
-    case failure
-    
-    case timeout
-}
-
 /// Convenient methods for DNS resolution.
 public class DNSResolver {
-
     private static let queue = DispatchQueue(label: "DNSResolver")
 
     /**
@@ -71,17 +64,17 @@ public class DNSResolver {
      - Parameter queue: The queue to execute the `completionHandler` in.
      - Parameter completionHandler: The completion handler with the resolved addresses and an optional error.
      */
-    public static func resolve(_ hostname: String, timeout: Int, queue: DispatchQueue, completionHandler: @escaping (Result<[DNSRecord], DNSError>) -> Void) {
-        var pendingHandler: ((Result<[DNSRecord], DNSError>) -> Void)? = completionHandler
+    public static func resolve(_ hostname: String, timeout: Int, queue: DispatchQueue, completionHandler: @escaping ([DNSRecord]?, Error?) -> Void) {
+        var pendingHandler: (([DNSRecord]?, Error?) -> Void)? = completionHandler
         let host = CFHostCreateWithName(nil, hostname as CFString).takeRetainedValue()
         DNSResolver.queue.async {
             CFHostStartInfoResolution(host, .addresses, nil)
             guard let handler = pendingHandler else {
                 return
             }
-            DNSResolver.didResolve(host: host) { result in
+            DNSResolver.didResolve(host: host) { (records, error) in
                 queue.async {
-                    handler(result)
+                    handler(records, error)
                     pendingHandler = nil
                 }
             }
@@ -91,15 +84,15 @@ public class DNSResolver {
                 return
             }
             CFHostCancelInfoResolution(host, .addresses)
-            handler(.failure(.timeout))
+            handler(nil, nil)
             pendingHandler = nil
         }
     }
     
-    private static func didResolve(host: CFHost, completionHandler: @escaping (Result<[DNSRecord], DNSError>) -> Void) {
+    private static func didResolve(host: CFHost, completionHandler: @escaping ([DNSRecord]?, Error?) -> Void) {
         var success: DarwinBoolean = false
         guard let rawAddresses = CFHostGetAddressing(host, &success)?.takeUnretainedValue() as Array? else {
-            completionHandler(.failure(.failure))
+            completionHandler(nil, nil)
             return
         }
         
@@ -128,11 +121,7 @@ public class DNSResolver {
                 records.append(DNSRecord(address: address, isIPv6: true))
             }
         }
-        guard !records.isEmpty else {
-            completionHandler(.failure(.failure))
-            return
-        }
-        completionHandler(.success(records))
+        completionHandler(records, nil)
     }
 
     /**

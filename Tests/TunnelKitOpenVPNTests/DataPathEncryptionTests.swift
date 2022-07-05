@@ -3,7 +3,7 @@
 //  TunnelKitOpenVPNTests
 //
 //  Created by Davide De Rosa on 7/11/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -35,9 +35,9 @@
 //
 
 import XCTest
-import TunnelKitCore
-import CTunnelKitCore
-import CTunnelKitOpenVPNProtocol
+@testable import TunnelKitCore
+import _TunnelKitCoreObjC
+import _TunnelKitOpenVPNObjC
 
 class DataPathEncryptionTests: XCTestCase {
     private let cipherKey = try! SecureRandom.safeData(length: 32)

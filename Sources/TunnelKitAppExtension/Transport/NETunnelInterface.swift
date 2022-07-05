@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 8/27/17.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -45,18 +45,21 @@ private let log = SwiftyBeaver.self
 public class NETunnelInterface: TunnelInterface {
     private weak var impl: NEPacketTunnelFlow?
     
+    /// :nodoc:
     public init(impl: NEPacketTunnelFlow) {
         self.impl = impl
     }
     
     // MARK: TunnelInterface
     
+    /// :nodoc:
     public var isPersistent: Bool {
         return false
     }
     
     // MARK: IOInterface
     
+    /// :nodoc:
     public func setReadHandler(queue: DispatchQueue, _ handler: @escaping ([Data]?, Error?) -> Void) {
         loopReadPackets(queue, handler)
     }
@@ -72,12 +75,14 @@ public class NETunnelInterface: TunnelInterface {
         }
     }
     
+    /// :nodoc:
     public func writePacket(_ packet: Data, completionHandler: ((Error?) -> Void)?) {
         let protocolNumber = IPHeader.protocolNumber(inPacket: packet)
         impl?.writePackets([packet], withProtocols: [protocolNumber])
         completionHandler?(nil)
     }
     
+    /// :nodoc:
     public func writePackets(_ packets: [Data], completionHandler: ((Error?) -> Void)?) {
         let protocols = packets.map {
             IPHeader.protocolNumber(inPacket: $0)

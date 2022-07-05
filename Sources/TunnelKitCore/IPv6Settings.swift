@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 5/19/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -26,10 +26,10 @@
 import Foundation
 
 /// Encapsulates the IPv6 settings for the tunnel.
-public struct IPv6Settings: Codable, Equatable, CustomStringConvertible {
+public struct IPv6Settings: Codable, CustomStringConvertible {
     
     /// Represents an IPv6 route in the routing table.
-    public struct Route: Codable, Hashable, CustomStringConvertible {
+    public struct Route: Codable, CustomStringConvertible {
         
         /// The destination host or subnet.
         public let destination: String
@@ -40,6 +40,7 @@ public struct IPv6Settings: Codable, Equatable, CustomStringConvertible {
         /// The address of the gateway (uses default gateway if not set).
         public let gateway: String
         
+        /// :nodoc:
         public init(_ destination: String, _ prefixLength: UInt8?, _ gateway: String) {
             self.destination = destination
             self.prefixLength = prefixLength ?? 3
@@ -48,6 +49,7 @@ public struct IPv6Settings: Codable, Equatable, CustomStringConvertible {
         
         // MARK: CustomStringConvertible
         
+        /// :nodoc:
         public var description: String {
             return "{\(destination.maskedDescription)/\(prefixLength) \(gateway.maskedDescription)}"
         }
@@ -65,6 +67,7 @@ public struct IPv6Settings: Codable, Equatable, CustomStringConvertible {
     /// The additional routes.
     public let routes: [Route]
     
+    /// :nodoc:
     public init(address: String, addressPrefixLength: UInt8, defaultGateway: String, routes: [Route]) {
         self.address = address
         self.addressPrefixLength = addressPrefixLength
@@ -74,6 +77,7 @@ public struct IPv6Settings: Codable, Equatable, CustomStringConvertible {
 
     // MARK: CustomStringConvertible
     
+    /// :nodoc:
     public var description: String {
         return "addr \(address.maskedDescription)/\(addressPrefixLength) gw \(defaultGateway.maskedDescription) routes \(routes.map { $0.maskedDescription })"
     }

@@ -3,7 +3,7 @@
 //  TunnelKitOpenVPNTests
 //
 //  Created by Davide De Rosa on 9/11/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -24,8 +24,8 @@
 //
 
 import XCTest
-import TunnelKitCore
-import TunnelKitOpenVPNCore
+@testable import TunnelKitCore
+import TunnelKitOpenVPN
 
 class StaticKeyTests: XCTestCase {
     private let content = """

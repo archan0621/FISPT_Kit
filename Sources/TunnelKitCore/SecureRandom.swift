@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 2/3/17.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -36,13 +36,15 @@
 
 import Foundation
 import Security.SecRandom
-import CTunnelKitCore
-import __TunnelKitUtils
+import _TunnelKitCoreObjC
+import _TunnelKitUtils
 
+/// :nodoc:
 public enum SecureRandomError: Error {
     case randomGenerator
 }
 
+/// :nodoc:
 public class SecureRandom {
     @available(*, deprecated)
     static func uint32FromBuffer() throws -> UInt32 {

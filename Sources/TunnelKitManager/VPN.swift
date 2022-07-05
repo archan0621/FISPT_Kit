@@ -2,8 +2,8 @@
 //  VPN.swift
 //  TunnelKit
 //
-//  Created by Davide De Rosa on 9/6/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Created by Davide De Rosa on 6/12/18.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -25,76 +25,15 @@
 
 import Foundation
 
-/// Helps controlling a VPN without messing with underlying implementations.
-public protocol VPN {
-    associatedtype Configuration
+/// Wrapper for shared access to VPN-related objects.
+public class VPN {
     
-    associatedtype Extra
+    /// The VPN became ready to use.
+    public static let didPrepare = Notification.Name("VPNDidPrepare")
     
-    /**
-     Synchronizes with the current VPN state.
-     */
-    func prepare() async
-    
-    /**
-     Installs the VPN profile.
+    /// The VPN did change status.
+    public static let didChangeStatus = Notification.Name("VPNDidChangeStatus")
 
-     - Parameter tunnelBundleIdentifier: The bundle identifier of the tunnel extension.
-     - Parameter configuration: The configuration to install.
-     - Parameter extra: Optional extra arguments.
-     */
-    func install(
-        _ tunnelBundleIdentifier: String,
-        configuration: Configuration,
-        extra: Extra?
-    ) async throws
-
-    /**
-     Reconnects to the VPN.
-
-     - Parameter tunnelBundleIdentifier: The bundle identifier of the tunnel extension.
-     - Parameter configuration: The configuration to install.
-     - Parameter extra: Optional extra arguments.
-     - Parameter after: The reconnection delay.
-     */
-    func reconnect(
-        _ tunnelBundleIdentifier: String,
-        configuration: Configuration,
-        extra: Extra?,
-        after: DispatchTimeInterval
-    ) async throws
-    
-    /**
-     Disconnects from the VPN.
-     */
-    func disconnect() async
-    
-    /**
-     Uninstalls the VPN profile.
-     */
-    func uninstall() async
-}
-
-extension DispatchTimeInterval {
-    public var nanoseconds: UInt64 {
-        switch self {
-        case .seconds(let sec):
-            return UInt64(sec) * NSEC_PER_SEC
-            
-        case .milliseconds(let msec):
-            return UInt64(msec) * NSEC_PER_MSEC
-            
-        case .microseconds(let usec):
-            return UInt64(usec) * NSEC_PER_USEC
-            
-        case .nanoseconds(let nsec):
-            return UInt64(nsec)
-            
-        case .never:
-            return 0
-            
-        @unknown default:
-            return 0
-        }
-    }
+    /// The VPN profile did (re)install.
+    public static let didReinstall = Notification.Name("VPNDidReinstall")
 }

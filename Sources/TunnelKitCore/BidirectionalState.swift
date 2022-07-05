@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 9/9/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -26,7 +26,7 @@
 import Foundation
 
 /// A generic structure holding a pair of inbound/outbound states.
-public struct BidirectionalState<T> {
+public class BidirectionalState<T> {
     private let resetValue: T
 
     /// The inbound state.
@@ -58,7 +58,7 @@ public struct BidirectionalState<T> {
     /**
      Resets state to the value provided with `init(withResetValue:)`.
      */
-    public mutating func reset() {
+    public func reset() {
         inbound = resetValue
         outbound = resetValue
     }

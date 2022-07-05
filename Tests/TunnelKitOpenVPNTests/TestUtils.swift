@@ -3,7 +3,7 @@
 //  TunnelKitOpenVPNTests
 //
 //  Created by Davide De Rosa on 7/7/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -35,9 +35,9 @@
 //
 
 import Foundation
-import TunnelKitCore
-import CTunnelKitCore
-import CTunnelKitOpenVPNProtocol
+@testable import TunnelKitCore
+import _TunnelKitCoreObjC
+import _TunnelKitOpenVPNObjC
 
 public class TestUtils {
     public static func uniqArray(_ v: [Int]) -> [Int] {

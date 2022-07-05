@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 5/19/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -26,7 +26,7 @@
 import Foundation
 
 /// Encapsulates a proxy setting.
-public struct Proxy: Codable, Equatable, RawRepresentable, CustomStringConvertible {
+public struct Proxy: Codable, RawRepresentable, CustomStringConvertible {
     
     /// The proxy address.
     public let address: String
@@ -34,6 +34,7 @@ public struct Proxy: Codable, Equatable, RawRepresentable, CustomStringConvertib
     /// The proxy port.
     public let port: UInt16
     
+    /// :nodoc:
     public init(_ address: String, _ port: UInt16) {
         self.address = address
         self.port = port
@@ -41,10 +42,12 @@ public struct Proxy: Codable, Equatable, RawRepresentable, CustomStringConvertib
     
     // MARK: RawRepresentable
     
+    /// :nodoc:
     public var rawValue: String {
         return "\(address):\(port)"
     }
     
+    /// :nodoc:
     public init?(rawValue: String) {
         let comps = rawValue.components(separatedBy: ":")
         guard comps.count == 2, let port = UInt16(comps[1]) else {
@@ -55,6 +58,7 @@ public struct Proxy: Codable, Equatable, RawRepresentable, CustomStringConvertib
     
     // MARK: CustomStringConvertible
     
+    /// :nodoc:
     public var description: String {
         return rawValue
     }

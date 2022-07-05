@@ -1,16 +1,15 @@
-![iOS 13+](https://img.shields.io/badge/ios-13+-green.svg)
+![iOS 12+](https://img.shields.io/badge/ios-12+-green.svg)
 ![macOS 10.15+](https://img.shields.io/badge/macos-10.15+-green.svg)
+[![OpenSSL 1.1.1l](https://img.shields.io/badge/openssl-1.1.1l-d69c68.svg)](https://www.openssl.org/news/openssl-1.1.1-notes.html)
 [![License GPLv3](https://img.shields.io/badge/license-GPLv3-lightgray.svg)](LICENSE)
 
-# FISPT_Kit
+# TunnelKit
 
-This library provides a generic framework for VPN development on Apple platforms.
+This library provides a generic framework for VPN development and a simplified Swift/Obj-C implementation of the OpenVPN® protocol for the Apple platforms. The crypto layer is built on top of [OpenSSL 1.1.1][dep-openssl], which in turn enables support for a certain range of encryption and digest algorithms.
 
-## OpenVPN
+## Getting started
 
-TunnelKit comes with a simplified Swift/Obj-C implementation of the [OpenVPN®][dep-openvpn] protocol, whose crypto layer is built on top of [OpenSSL 1.1.1][dep-openssl].
-
-The client is known to work with OpenVPN® 2.3+ servers.
+The client is known to work with [OpenVPN®][openvpn] 2.3+ servers.
 
 - [x] Handshake and tunneling over UDP or TCP
 - [x] Ciphers
@@ -68,74 +67,32 @@ TunnelKit can parse .ovpn configuration files. Below are a few details worth men
 
 Many other flags are ignored too but it's normally not an issue.
 
-## WireGuard
-
-TunnelKit offers a user-friendly API to the modern [WireGuard®][dep-wireguard] protocol.
-
-### Manual Xcode steps
-
-If you add any `TunnelKitWireGuard*` Swift package to the "Link with binary libraries" section of your app or tunnel extension, you are bound to hit this error:
-
-```
-ld: library not found for -lwg-go
-```
-
-because part of the WireGuardKit package is based on `make`, which SwiftPM doesn't support yet.
-
-Therefore, make sure to follow the steps below for proper integration:
-
-- Copy `Scripts/build_wireguard_go_bridge.sh` somewhere in your project.
-- In Xcode, click File -> New -> Target. Switch to "Other" tab and choose "External Build System".
-- Type a name for your target.
-- Open the "Info" tab and replace `/usr/bin/make` with `$(PROJECT_DIR)/path/to/build_wireguard_go_bridge.sh` in "Build Tool".
-- Switch to "Build Settings" and find SDKROOT. Type in `macosx` if you target macOS, or type in `iphoneos` if you target iOS.
-- Locate your tunnel extension target and switch to "Build Phases" tab.
-- Locate "Dependencies" section and hit "+" to add the target you have just created.
-- Repeat the process for each platform.
-
 ## Installation
 
 ### Requirements
 
-- iOS 13.0+ / macOS 10.15+
-- SwiftPM 5.3
+- iOS 12.0+ / macOS 10.15+
+- SwiftPM 5
 - Git (preinstalled with Xcode Command Line Tools)
-- golang (for WireGuardKit)
+- [jazzy][dep-jazzy] (optional, for documentation)
 
 It's highly recommended to use the Git package provided by [Homebrew][dep-brew].
-
-### Caveats
-
-Make sure to set "Enable Bitcode" (iOS) to NO, otherwise the library [would not be able to link OpenSSL][about-pr-bitcode] (OpenVPN) and the `wg-go` bridge (WireGuard).
-
-Recent versions of Xcode (latest is 13.1) have an issue where the "Frameworks" directory is replicated inside application extensions. This is not a blocker during development, but will prevent your archive from being validated against App Store Connect due to the following error:
-
-    ERROR ITMS-90206: "Invalid Bundle. The bundle at '*.appex' contains disallowed file 'Frameworks'."
-
-You will need to add a "Run Script" phase to your main app target where you manually remove the offending folder, i.e.:
-
-    rm -rf "${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/YourTunnelTarget.appex/Frameworks"
-
-for iOS and:
-
-    rm -rf "${BUILT_PRODUCTS_DIR}/${PLUGINS_FOLDER_PATH}/YourTunnelTarget.appex/Contents/Frameworks"
-
-for macOS.
 
 ### Demo
 
 Download the library codebase locally:
 
-    $ git clone https://github.com/archan0621/FISPT_Kit.git
+    $ git clone https://github.com/passepartoutvpn/tunnelkit.git
 
-There are demo targets containing a simple app for testing the tunnels. Open `Demo/TunnelKit.xcodeproject` in Xcode and run it on both iOS and macOS.
 
-For the VPN to work properly, the demo requires:
+There are demo targets containing a simple app for testing the tunnel, called `BasicTunnel`. Open `Demo/TunnelKit.xcodeproject` in Xcode and run it on both iOS and macOS.
+
+For the VPN to work properly, the `BasicTunnel` demo requires:
 
 - _App Groups_ and _Keychain Sharing_ capabilities
 - App IDs with _Packet Tunnel_ entitlements
 
-both in the main app and the tunnel extension targets.
+both in the main app and the tunnel extension target.
 
 In order to test connectivity in your own environment, modify the file `Demo/Demo/Configuration.swift` to match your VPN server parameters.
 
@@ -147,10 +104,10 @@ Example:
 	-----END CERTIFICATE-----
     """)
 
-Make sure to also update the following constants in the `*ViewController.swift` files, according to your developer account and your target bundle identifiers:
+Make sure to also update the following constants in the same files, according to your developer account and your target bundle identifiers:
 
-    private let appGroup = "..."
-    private let tunnelIdentifier = "..."
+    public static let appGroup
+    public static let tunnelIdentifier
 
 Remember that the App Group on macOS requires a team ID prefix.
 
@@ -158,34 +115,57 @@ Remember that the App Group on macOS requires a team ID prefix.
 
 The library is split into several modules, in order to decouple the low-level protocol implementation from the platform-specific bridging, namely the [NetworkExtension][ne-home] VPN framework.
 
-Full documentation of the public interface is available and can be generated by opening the package in Xcode and running "Build Documentation" (Xcode 13).
+Full documentation of the public interface is available and can be generated with [jazzy][dep-jazzy]. After installing the jazzy Ruby gem with:
 
-### TunnelKit
+    $ gem install jazzy
 
-This component includes convenient classes to control the VPN tunnel from your app without the NetworkExtension headaches. Have a look at `VPN` implementations:
+enter the root directory of the repository and run:
 
-- `MockVPN` (default, useful to test on simulator)
-- `NetworkExtensionVPN` (anything based on NetworkExtension)
+    $ jazzy
+
+The generated output is stored into the `docs` directory in HTML format.
+
+### TunnelKitCore
+
+Contains the building blocks of a VPN protocol. Eventually, a consumer would implement the `Session` interface, expected to start and control the VPN session. A session is expected to work with generic network interfaces:
+
+- `LinkInterface` (e.g. a socket)
+- `TunnelInterface` (e.g. an `utun` interface)
+
+There are no physical network implementations (e.g. UDP or TCP) in this module.
+
+### TunnelKitAppExtension
+
+Provides a layer on top of the NetworkExtension framework. Most importantly, bridges native [NWUDPSession][ne-udp] and [NWTCPConnection][ne-tcp] to an abstract `GenericSocket` interface, thus making a multi-protocol VPN dramatically easier to manage.
+
+### TunnelKitManager
+
+This component includes convenient classes to control the VPN tunnel from your app without the NetworkExtension headaches. Have a look at `VPNProvider` implementations:
+
+- `MockVPNProvider` (default, useful to test on simulator)
+- `NetworkExtensionVPNProvider` (for IPSec/IKEv2)
+
+### TunnelKitIKE
+
+Here you find `NativeProvider`, a generic way to manage a VPN profile based on the native IPSec/IKEv2 protocols. Just wrap a `NEVPNProtocolIPSec` or `NEVPNProtocolIKEv2` object in a `NetworkExtensionVPNConfiguration` and use it to install or connect to the VPN.
 
 ### TunnelKitOpenVPN
 
-Provides the entities to interact with the OpenVPN tunnel.
+Here are the low-level entities on top of which an OpenVPN connection is established. Code is mixed Swift and Obj-C, most of it is not exposed to consumers. The module depends on OpenSSL.
 
-### TunnelKitOpenVPNAppExtension
+The entry point is the `OpenVPNSession` class. The networking layer is fully abstract and delegated externally with the use of opaque `IOInterface` (`LinkInterface` and `TunnelInterface`) and `OpenVPNSessionDelegate` protocols.
 
-Contains the `NEPacketTunnelProvider` implementation of a OpenVPN tunnel.
+Another goal of this module is packaging up a black box implementation of a [NEPacketTunnelProvider][ne-ptp], which is the essential part of a Packet Tunnel Provider app extension. You will find the main implementation in the `OpenVPNTunnelProvider` class. On the client side, you manage the VPN profile with the `OpenVPNProvider` class, which is a specific implementation of `NetworkExtensionVPNProvider`.
 
-### TunnelKitWireGuard
+A debug log snapshot is optionally maintained and shared by the tunnel provider to host apps via the App Group container.
 
-Provides the entities to interact with the WireGuard tunnel.
+### TunnelKitLZO
 
-### TunnelKitWireGuardAppExtension
-
-Contains the `NEPacketTunnelProvider` implementation of a WireGuard tunnel.
+Due to the restrictive license (GPLv2), LZO support is provided as an optional component.
 
 ## License
 
-Copyright (c) 2022 Park Jong Ha. All rights reserved.
+Copyright (c) 2020 Davide De Rosa. All rights reserved.
 
 ### Part I
 
@@ -214,31 +194,21 @@ For more details please see [CONTRIBUTING][contrib-readme].
 - [SURFnet][ppl-surfnet]
 - [SwiftyBeaver][dep-swiftybeaver-repo] - Copyright (c) 2015 Sebastian Kreutzberger
 - [XMB5][ppl-xmb5] for the [XOR patch][ppl-xmb5-xor] - Copyright (c) 2020 Sam Foxman
-- [eduVPN][ppl-eduvpn] for the convenient WireGuardKitGo script
-
-### TunnelKit
-
-© Copyright (c) 2022 Davide De Rosa. All rights reserved.
-
-### OpenVPN
-
-© Copyright 2022 OpenVPN | OpenVPN is a registered trademark of OpenVPN, Inc.
-
-### WireGuard
-
-© Copyright 2015-2022 Jason A. Donenfeld. All Rights Reserved. "WireGuard" and the "WireGuard" logo are registered trademarks of Jason A. Donenfeld.
-
-### OpenSSL
 
 This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit. ([https://www.openssl.org/][dep-openssl])
 
+Copyright (c) 2002-2018 OpenVPN Inc. - OpenVPN is a registered trademark of OpenVPN Inc.
+
 ## Contacts
 
-Website: [archan0621.github.io][about-website]
+Twitter: [@keeshux][about-twitter]
 
+Website: [passepartoutvpn.app][about-website]
+
+[openvpn]: https://openvpn.net/index.php/open-source/overview.html
+
+[dep-jazzy]: https://github.com/realm/jazzy
 [dep-brew]: https://brew.sh/
-[dep-openvpn]: https://openvpn.net/index.php/open-source/overview.html
-[dep-wireguard]: https://www.wireguard.com/
 [dep-openssl]: https://www.openssl.org/
 
 [ne-home]: https://developer.apple.com/documentation/networkextension
@@ -258,8 +228,7 @@ Website: [archan0621.github.io][about-website]
 [ppl-surfnet]: https://www.surf.nl/en/about-surf/subsidiaries/surfnet
 [ppl-xmb5]: https://github.com/XMB5
 [ppl-xmb5-xor]: https://github.com/passepartoutvpn/tunnelkit/pull/170
-[ppl-eduvpn]: https://github.com/eduvpn/apple
 [about-tunnelblick-xor]: https://tunnelblick.net/cOpenvpn_xorpatch.html
-[about-pr-bitcode]: https://github.com/passepartoutvpn/tunnelkit/issues/51
 
-[about-website]: https://archan0621.github.io
+[about-twitter]: https://twitter.com/keeshux
+[about-website]: https://passepartoutvpn.app

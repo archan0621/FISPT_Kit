@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 5/19/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -66,9 +66,9 @@ public protocol Session {
     /**
      Returns the current data bytes count.
      
-     - Returns: The current data bytes count.
+     - Returns: The current data bytes count as a pair, inbound first.
      */
-    func dataCount() -> DataCount?
+    func dataCount() -> (Int, Int)?
     
     /**
      Returns the current server configuration.

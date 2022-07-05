@@ -3,7 +3,7 @@
 //  TunnelKitCoreTests
 //
 //  Created by Davide De Rosa on 7/7/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -35,7 +35,7 @@
 //
 
 import Foundation
-import TunnelKitCore
+@testable import TunnelKitCore
 
 public class TestUtils {
     public static func generateDataSuite(_ size: Int, _ count: Int) -> [Data] {

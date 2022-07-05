@@ -3,7 +3,7 @@
 //  TunnelKitLZOTests
 //
 //  Created by Davide De Rosa on 3/18/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -24,8 +24,8 @@
 //
 
 import XCTest
-import TunnelKitCore
-import CTunnelKitCore
+@testable import TunnelKitCore
+import _TunnelKitCoreObjC
 import TunnelKitLZO
 
 class CompressionTests: XCTestCase {

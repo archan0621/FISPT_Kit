@@ -3,7 +3,7 @@
 //  TunnelKitOpenVPNTests
 //
 //  Created by Davide De Rosa on 7/7/18.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -35,10 +35,10 @@
 //
 
 import XCTest
-import TunnelKitCore
-import TunnelKitOpenVPNCore
-import CTunnelKitCore
-import CTunnelKitOpenVPNProtocol
+@testable import TunnelKitCore
+import _TunnelKitCoreObjC
+import TunnelKitOpenVPN
+import _TunnelKitOpenVPNObjC
 
 class EncryptionTests: XCTestCase {
     private var cipherEncKey: ZeroingData!
@@ -118,6 +118,11 @@ class EncryptionTests: XCTestCase {
         let exp = "e2fccccaba712ccc68449b1c56427ac1"
         print(md5)
         XCTAssertEqual(md5, exp)
+        
+        let pem = try! String(contentsOfFile: path, encoding: .ascii)
+        let md5FromPEM = try! TLSBox.md5(forCertificatePEM: pem)
+        print(md5FromPEM)
+        XCTAssertEqual(md5FromPEM, exp)
     }
     
     func testPrivateKeyDecryption() {

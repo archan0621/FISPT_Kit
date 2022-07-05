@@ -3,7 +3,7 @@
 //  Demo
 //
 //  Created by Davide De Rosa on 6/13/20.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/keeshux
 //
@@ -26,11 +26,9 @@
 import Foundation
 import TunnelKitCore
 import TunnelKitOpenVPN
-import TunnelKitWireGuard
 
-extension OpenVPN {
-    struct DemoConfiguration {
-        static let ca = OpenVPN.CryptoContainer(pem: """
+struct Configuration {
+    static let ca = OpenVPN.CryptoContainer(pem: """
 -----BEGIN CERTIFICATE-----
 MIIG6zCCBNOgAwIBAgIJAJhm2PWFkE8NMA0GCSqGSIb3DQEBCwUAMIGpMQswCQYD
 VQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxEzAR
@@ -72,7 +70,7 @@ HiT8esMeX+/orMetzuTPgZInMhznvVdNdfwAfibwlXOKvm154UgDVgnKV405oNM=
 -----END CERTIFICATE-----
 """)
 
-        static let clientCertificate = OpenVPN.CryptoContainer(pem: """
+    static let clientCertificate = OpenVPN.CryptoContainer(pem: """
 -----BEGIN CERTIFICATE-----
 MIIHPTCCBSWgAwIBAgIBAjANBgkqhkiG9w0BAQsFADCBqTELMAkGA1UEBhMCVVMx
 CzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRMwEQYDVQQKEwpH
@@ -116,7 +114,7 @@ kiJ6Ts2iqIvR7T7Eme2vBYH/UJ1DXrdCJx6IDGxxgoXk
 -----END CERTIFICATE-----
 """)
 
-        static let clientKey = OpenVPN.CryptoContainer(pem: """
+    static let clientKey = OpenVPN.CryptoContainer(pem: """
 -----BEGIN PRIVATE KEY-----
 MIIJQgIBADANBgkqhkiG9w0BAQEFAASCCSwwggkoAgEAAoICAQDvgpUJoqgvHmbF
 2y7Uvt1BfglAXWmzzhaSjr4ZqYLMQncpcwC1iuVgDseGp/rl4C/C64RebIx0hLU1
@@ -171,47 +169,21 @@ M69t86apMrAxkUxVJAWLRBd9fbYyzJgTW61tFqXWTZpiz6bhuWApSEzaHcL3/f5l
 -----END PRIVATE KEY-----
 """)
 
-        static func make(_ title: String, appGroup: String, hostname: String, port: UInt16, socketType: SocketType) -> OpenVPN.ProviderConfiguration {
-            var builder = OpenVPN.ConfigurationBuilder()
-            builder.ca = ca
-            builder.cipher = .aes128cbc
-            builder.digest = .sha1
-            builder.compressionFraming = .compLZO
-            builder.renegotiatesAfter = nil
-            builder.remotes = [Endpoint(hostname, EndpointProtocol(socketType, port))]
-            builder.clientCertificate = clientCertificate
-            builder.clientKey = clientKey
-            builder.mtu = 1350
-            builder.routingPolicies = [.IPv4, .IPv6]
-            let cfg = builder.build()
-
-            var providerConfiguration = OpenVPN.ProviderConfiguration(title, appGroup: appGroup, configuration: cfg)
-            providerConfiguration.shouldDebug = true
-            providerConfiguration.masksPrivateData = false
-            return providerConfiguration
-        }
-    }
-}
-
-extension WireGuard {
-    struct DemoConfiguration {
-        static func make(
-            _ title: String,
-            appGroup: String,
-            clientPrivateKey: String,
-            clientAddress: String,
-            serverPublicKey: String,
-            serverAddress: String,
-            serverPort: String
-        ) -> WireGuard.ProviderConfiguration? {
-            var builder = try! WireGuard.ConfigurationBuilder(clientPrivateKey)
-            builder.addresses = [clientAddress]
-            builder.dnsServers = ["1.1.1.1", "1.0.0.1"]
-            try! builder.addPeer(serverPublicKey, endpoint: "\(serverAddress):\(serverPort)")
-            builder.addDefaultGatewayIPv4(toPeer: 0)
-            let cfg = builder.build()
-
-            return WireGuard.ProviderConfiguration(title, appGroup: appGroup, configuration: cfg)
-        }
+    static func make(hostname: String, port: UInt16, socketType: SocketType) -> OpenVPNTunnelProvider.Configuration {
+        var sessionBuilder = OpenVPN.ConfigurationBuilder()
+        sessionBuilder.ca = ca
+        sessionBuilder.cipher = .aes128cbc
+        sessionBuilder.digest = .sha1
+        sessionBuilder.compressionFraming = .compLZO
+        sessionBuilder.renegotiatesAfter = nil
+        sessionBuilder.hostname = hostname
+        sessionBuilder.endpointProtocols = [EndpointProtocol(socketType, port)]
+        sessionBuilder.clientCertificate = clientCertificate
+        sessionBuilder.clientKey = clientKey
+        sessionBuilder.mtu = 1350
+        var builder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: sessionBuilder.build())
+        builder.shouldDebug = true
+        builder.masksPrivateData = false
+        return builder.build()
     }
 }

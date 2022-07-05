@@ -3,7 +3,7 @@
 //  TunnelKit
 //
 //  Created by Davide De Rosa on 5/19/19.
-//  Copyright (c) 2022 Davide De Rosa. All rights reserved.
+//  Copyright (c) 2021 Davide De Rosa. All rights reserved.
 //
 //  https://github.com/passepartoutvpn
 //
@@ -26,10 +26,10 @@
 import Foundation
 
 /// Encapsulates the IPv4 settings for the tunnel.
-public struct IPv4Settings: Codable, Equatable, CustomStringConvertible {
+public struct IPv4Settings: Codable, CustomStringConvertible {
     
     /// Represents an IPv4 route in the routing table.
-    public struct Route: Codable, Hashable, CustomStringConvertible {
+    public struct Route: Codable, CustomStringConvertible {
         
         /// The destination host or subnet.
         public let destination: String
@@ -40,6 +40,7 @@ public struct IPv4Settings: Codable, Equatable, CustomStringConvertible {
         /// The address of the gateway (uses default gateway if not set).
         public let gateway: String
         
+        /// :nodoc:
         public init(_ destination: String, _ mask: String?, _ gateway: String) {
             self.destination = destination
             self.mask = mask ?? "255.255.255.255"
@@ -48,6 +49,7 @@ public struct IPv4Settings: Codable, Equatable, CustomStringConvertible {
         
         // MARK: CustomStringConvertible
         
+        /// :nodoc:
         public var description: String {
             return "{\(destination.maskedDescription)/\(mask) \(gateway.maskedDescription)}"
         }
@@ -65,6 +67,7 @@ public struct IPv4Settings: Codable, Equatable, CustomStringConvertible {
     /// The additional routes.
     public let routes: [Route]
     
+    /// :nodoc:
     public init(address: String, addressMask: String, defaultGateway: String, routes: [Route]) {
         self.address = address
         self.addressMask = addressMask
@@ -74,6 +77,7 @@ public struct IPv4Settings: Codable, Equatable, CustomStringConvertible {
     
     // MARK: CustomStringConvertible
     
+    /// :nodoc:
     public var description: String {
         return "addr \(address.maskedDescription) netmask \(addressMask) gw \(defaultGateway.maskedDescription) routes \(routes.map { $0.maskedDescription })"
     }
